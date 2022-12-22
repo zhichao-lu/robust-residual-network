@@ -36,7 +36,7 @@ parser.add_argument('--attack_choice', default='PGD', choices=['PGD', 'AA', 'CW'
 parser.add_argument('--epsilon', default=8, type=float, help='perturbation')
 parser.add_argument('--num_steps', default=20, type=int, help='perturb number of steps')
 parser.add_argument('--step_size', default=0.8, type=float, help='perturb step size')
-
+parser.add_argument('--batch_size', default=100, type=int, help='evaluation batch size')
 
 args = parser.parse_args()
 if args.epsilon > 1:
@@ -129,7 +129,7 @@ def main():
     logger.info(model)
 
     # Setup ENV
-    data_loader = config.dataset(data_path=args.data).getDataLoader()
+    data_loader = config.dataset(data_path=args.data, eval_batch_size=args.batch_size).getDataLoader()
     evaluator = Evaluator(data_loader, logger, config)
 
     if hasattr(config.dataset, "input_size"):

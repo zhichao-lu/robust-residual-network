@@ -162,7 +162,8 @@ class NetworkBlock(nn.Module):
 
 class PreActResNet(nn.Module):
     def __init__(self, num_classes=10, channel_configs=(16, 160, 320, 640),
-                 depth_configs=(5, 5, 5), stride_config=(1, 2, 2), stem_stride=1,
+                 depth_configs=(5, 5, 5), drop_rate_config=(0.0, 0.0, 0.0),
+                 stride_config=(1, 2, 2), zero_init_residual=False, stem_stride=1,
                  kernel_size_configs=(3, 3, 3),
                  block_types=('basic_block', 'basic_block', 'basic_block'),
                  activations=('ReLU', 'ReLU', 'ReLU'),
