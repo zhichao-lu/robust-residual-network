@@ -154,7 +154,8 @@ Please see [``examples/compound_scaling.ipynb``]()
     --checkpoint_path "path to checkpoint pth file" \
     --save_path "path to file for logging evaluation" \
     --attack_choice [FGSM/PGD/CW/AA] \
-    --num_steps [1/20/40/0]
+    --num_steps [1/20/40/0] \
+    --batch_size 100  # batch size for evaluation, adjust according to your GPU memory
 ```
 ### CIFAR-10 (TRADES)
 | Model | $^{\\#}\rm{P}$  | $^{\\#}\rm{F}$ | Clean | $\rm{PGD}^{20}$ | $\rm{CW}^{40}$ | AA |  |
