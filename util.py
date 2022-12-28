@@ -120,7 +120,7 @@ def save_model(filename, epoch, model, optimizer, alpha_optimizer, scheduler, sa
 def load_model(filename, model, optimizer, alpha_optimizer,  scheduler, **kwargs):
     # Load Torch State Dict
     checkpoints = torch.load(filename, map_location=device)
-    model.load_state_dict(checkpoints['model_state_dict'], strict=False)
+    model.load_state_dict(checkpoints['model_state_dict'], strict=True)
     if optimizer is not None and checkpoints['optimizer_state_dict'] is not None:
         optimizer.load_state_dict(checkpoints['optimizer_state_dict'])
     if alpha_optimizer is not None and checkpoints['alpha_optimizer_state_dict'] is not None:

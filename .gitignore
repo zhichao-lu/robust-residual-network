@@ -4,6 +4,7 @@ __pycache__/
 *$py.class
 .tmp/
 .idea
+post_process_checkpoints.py
 ipynb/
 \exps
 \configs

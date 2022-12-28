@@ -175,7 +175,8 @@ def main():
                                      optimizer=None,
                                      alpha_optimizer=None,
                                      scheduler=None)
-        ENV = checkpoint['ENV']
+        if 'ENV' in checkpoint:
+            ENV = checkpoint['ENV']
         if 'stable_acc_history' not in ENV:
             ENV['stable_acc_history'] = []
         if 'lip_history' not in ENV:

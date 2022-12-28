@@ -5,6 +5,10 @@ from models.activation import avaliable_activations
 from models.normalization import avaliable_normalizations
 
 
+CIFAR10_MEAN = (0.4914, 0.4822, 0.4465)
+CIFAR10_STD = (0.2471, 0.2435, 0.2616)
+
+
 def conv(in_planes, out_planes, stride=1, kernel_size=3, groups=1):
     """3x3 convolution with padding"""
     return nn.Conv2d(in_planes, out_planes, kernel_size=kernel_size, stride=stride, padding=kernel_size // 2,
@@ -169,7 +173,7 @@ class PreActResNet(nn.Module):
                  activations=('ReLU', 'ReLU', 'ReLU'),
                  normalizations=('BatchNorm', 'BatchNorm', 'BatchNorm'),
                  use_init=True, cardinality=8, base_width=64, scales=4,
-                 se_reduction=16):
+                 se_reduction=16, pre_process=False):
         super(PreActResNet, self).__init__()
         assert len(channel_configs) - 1 == len(depth_configs) == len(stride_config)
         self.channel_configs = channel_configs
@@ -178,6 +182,14 @@ class PreActResNet(nn.Module):
         self.get_feature = False
         self.get_stem_out = False
         self.block_types = block_types
+
+        self.pre_process = pre_process
+        # if True, add data normalization, this is only used for advanced training on CIFAR-10
+        if pre_process:
+            self.mean = torch.tensor(CIFAR10_MEAN).view(3, 1, 1)
+            self.std = torch.tensor(CIFAR10_STD).view(3, 1, 1)
+            self.mean_cuda = None
+            self.std_cuda = None
 
         self.stem_conv = nn.Conv2d(3, channel_configs[0], kernel_size=3, stride=stem_stride, padding=1, bias=False)
         self.blocks = nn.ModuleList([])
@@ -221,6 +233,16 @@ class PreActResNet(nn.Module):
                         m.bias.data.zero_()
 
     def forward(self, x):
+
+        if self.pre_process:
+            if x.is_cuda:
+                if self.mean_cuda is None:
+                    self.mean_cuda = self.mean.cuda()
+                    self.std_cuda = self.std.cuda()
+                x = (x - self.mean_cuda) / self.std_cuda
+            else:
+                x = (x - self.mean) / self.std
+
         out = self.stem_conv(x)
         for i, block in enumerate(self.blocks):
             out = block(out)
@@ -232,21 +254,27 @@ class PreActResNet(nn.Module):
 
 
 if __name__ == '__main__':
+    import util
     from torchprofile import profile_macs
 
     stride_config = [1, 2, 2]
     activations = ('ReLU', 'ReLU', 'ReLU')
     normalizations = ('BatchNorm', 'BatchNorm', 'BatchNorm')
 
-    # WRN-28-10 with RobustResBlock
-    depth, width_mult = [4, 4, 4], [10, 10, 10]
-    block_types = ['robust_res_block', 'robust_res_block', 'robust_res_block']
-    scales, base_width, cardinality, se_reduction = 8, 10, 4, 64
+    # # WRN-28-10 with RobustResBlock
+    # depth, width_mult = [4, 4, 4], [10, 10, 10]
+    # block_types = ['robust_res_block', 'robust_res_block', 'robust_res_block']
+    # scales, base_width, cardinality, se_reduction = 8, 10, 4, 64
 
     # # WRN-A1
     # depth, width_mult = [14, 14, 7], [5, 7, 3]
     # block_types = ['basic_block', 'basic_block', 'basic_block']
     # scales, base_width, cardinality, se_reduction = None, None, None, None
+
+    # WRN-A4
+    depth, width_mult = [27, 28, 13], [10, 14, 6]
+    block_types = ['basic_block', 'basic_block', 'basic_block']
+    scales, base_width, cardinality, se_reduction = None, None, None, None
 
     channels = [16, 16 * width_mult[0], 32 * width_mult[1], 64 * width_mult[2]]
     model = PreActResNet(
@@ -270,3 +298,10 @@ if __name__ == '__main__':
     flops = profile_macs(model, data) / 1e6
     print('depth@{}-{}-width@{}-{}-channels@{}-block@{}-params = {:.3f}, flops = {:.3f}'.format(
         sum(depth), depth, sum(width_mult), width_mult, channels, block_types[0], param_count, flops / 1000))
+
+    # checkpoint = util.load_model(filename="/Users/luzhicha/Dropbox/2023/github/revisit-resnet-adv-robust/exps/"
+    #                                       "wrn-a4-advanced-silu-apex-500k/checkpoints/weights-last-new.pt",
+    #                              model=model,
+    #                              optimizer=None,
+    #                              alpha_optimizer=None,
+    #                              scheduler=None)
