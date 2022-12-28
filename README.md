@@ -59,7 +59,7 @@ We allow the width (in terms of widening factors) of each stage ( $W_{i\in\\{1,2
 |  | $D\\&W$ | 22 | 8 | 22 | 11 | 11 | 5 | 74.8M | 20.3G | 58.47 | 56.14 | [[BaiduDisk]](https://pan.baidu.com/s/1Fca7czeCz-VoJGnOBl4kyQ?pwd=xb2n) |
 |  | $D$ | 14 | 16 | 13 | 16 | 11 | 16 | 185M | 38.8G | 57.90 | 55.79 | [[BaiduDisk]](https://pan.baidu.com/s/165NMZ5NP54gTBHcQD_IRaQ?pwd=knmk) |
 | 40G | $W$ | 11 | 18 | 11 | 21 | 11 | 9 | 170M | 42.7G | 58.48 | 56.15 | [[BaiduDisk]](https://pan.baidu.com/s/18nNGDffrmVoV9waSeCh8uA?pwd=pfph) |
-|  | $D\\&W$ | 27 | 10 | 28 | 14 | 13 | 6 | 141M | 40.9G | 58.76 | 56.59 | [[BaiduDisk]](https://pan.baidu.com/s/1_mqy83h12GrA9kHz3tkm_A?pwd=ffk8) |
+|  | $D\\&W$ | 27 | 10 | 28 | 14 | 13 | 6 | 147M | 40.4G | 58.76 | 56.59 | [[BaiduDisk]](https://pan.baidu.com/s/1_mqy83h12GrA9kHz3tkm_A?pwd=ffk8) |
 
 ### Adversarially Robust Residual Networks (RobustResNets)
 We use the proposed compound scaling rule to scale RobustResBlock and present a portfolio of adversarially robust residual networks.
@@ -73,6 +73,7 @@ We use the proposed compound scaling rule to scale RobustResBlock and present a 
 | [Gowal et al.](https://arxiv.org/abs/2010.03593) | WRN-28-10 | 36.5M | 5.20G | 62.80 |  |
 | [Huang el al.](https://arxiv.org/abs/2110.03825) | WRN-34-R | 68.1M | 19.1G | 62.54 |  |
 | Ours | RobustResNet-A1 | 19.2M | 5.11G | 63.70 | [[BaiduDisk]](https://pan.baidu.com/s/1OH2Tqg0Piz3OFCrhV0dVdw?pwd=m53k) |
+| Ours | WRN-A4 | 147M | 40.4G | 65.79 | [[BaiduDisk]](https://pan.baidu.com/s/1t2ZFXf_3DoKX_W7j4nzxuw?pwd=78cb) |
 
 ## How to use 
 ### 1. Use our *RobustResNets*
