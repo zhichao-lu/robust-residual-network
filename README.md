@@ -48,16 +48,16 @@ We allow the width (in terms of widening factors) of each stage ( $W_{i\in\\{1,2
 
 | $^{\\#}\rm{F}$ Target | Scale by | $D_{1}$ | $W_{1}$ | $D_{2}$ | $W_{2}$ | $D_{3}$ | $W_{3}$ | $^{\\#}\rm{P}$ | $^{\\#}\rm{F}$ | $\rm{PGD}^{20}$ | $\rm{CW}^{40}$ |  |
 |:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
-|  | $D$ | 5 | 10 | 5 | 10 | 2 | 10 | 24.0M | 5.25G | 56.05 | 53.14 | [BaiduDisk] |
+|  | $D$ | 5 | 10 | 5 | 10 | 2 | 10 | 24.0M | 5.25G | 56.05 | 53.14 | [[BaiduDisk]](https://pan.baidu.com/s/1JUie3bQGVgXlzhlJmPQmMA?pwd=n6vf) |
 | 5G | $W$ | 4 | 11 | 4 | 13 | 4 | 6 | 24.5M | 5.71G | 56.89 | 53.87 | [BaiduDisk] |
 |  | $D\\&W$ | 14 | 5 | 14 | 7 | 7 | 3 | 17.7M | 5.09G | 57.49 | 54.78 | [BaiduDisk] |
-|  | $D$ | 6 | 12 | 6 | 12 | 3 | 12 | 48.5M | 9.59G | 56.42 | 53.91 | [BaiduDisk] |
+|  | $D$ | 6 | 12 | 6 | 12 | 3 | 12 | 48.5M | 9.59G | 56.42 | 53.91 | [[BaiduDisk]](https://pan.baidu.com/s/1RfIxgVdM0MrhFDMXkCAHpg?pwd=emha) |
 | 10G | $W$ | 5 | 13 | 5 | 16 | 5 | 7 | 44.4M | 10.5G | 57.06 | 54.29 | [BaiduDisk] |
 |  | $D\\&W$ | 17 | 7 | 17 | 9 | 8 | 4 | 39.3M | 9.74G | 58.06 | 55.45 | [BaiduDisk] |
-|  | $D$ | 9 | 14 | 8 | 14 | 4 | 14 | 90.4M | 18.6G | 57.11 | 54.48 | [BaiduDisk] |
+|  | $D$ | 9 | 14 | 8 | 14 | 4 | 14 | 90.4M | 18.6G | 57.11 | 54.48 | [[BaiduDisk]](https://pan.baidu.com/s/1mI4NZsqWpbYhZ2DO09MGcA?pwd=udz8) |
 | 20G | $W$ | 7 | 16 | 7 | 18 | 7 | 8 | 81.7M | 20.4G | 58.02 | 55.34 | [BaiduDisk] |
 |  | $D\\&W$ | 22 | 8 | 22 | 11 | 11 | 5 | 74.8M | 20.3G | 58.47 | 56.14 | [BaiduDisk] |
-|  | $D$ | 14 | 16 | 13 | 16 | 11 | 16 | 185M | 38.8G | 57.90 | 55.79 | [BaiduDisk] |
+|  | $D$ | 14 | 16 | 13 | 16 | 11 | 16 | 185M | 38.8G | 57.90 | 55.79 | [[BaiduDisk]](https://pan.baidu.com/s/165NMZ5NP54gTBHcQD_IRaQ?pwd=knmk) |
 | 40G | $W$ | 11 | 18 | 11 | 21 | 11 | 9 | 170M | 42.7G | 58.48 | 56.15 | [BaiduDisk] |
 |  | $D\\&W$ | 27 | 10 | 28 | 14 | 13 | 6 | 141M | 40.9G | 58.76 | 56.59 | [BaiduDisk] |
 
