@@ -1,22 +1,14 @@
 import mlconfig
 import argparse
 
-import util
-import dataset
-import trades
-import madrys
-import mart
 import time
 import os
 import torch
 import shutil
 import copy
 import numpy as np
-from dist_engine import Evaluator, Trainer
 from torch.autograd import Variable
-from auto_attack.autoattack import AutoAttack
 from torchprofile import profile_macs
-import misc
 import random
 
 try:
@@ -29,10 +21,10 @@ except ImportError:
 
 from contextlib import suppress
 
-mlconfig.register(trades.TradesLoss)
-mlconfig.register(madrys.MadrysLoss)
-mlconfig.register(mart.MartLoss)
-mlconfig.register(dataset.DatasetGenerator)
+from core import dataset
+from core.dist_engine import Evaluator, Trainer
+from auto_attack.autoattack import AutoAttack
+from core import util, misc
 
 parser = argparse.ArgumentParser(description='RobustArc')
 parser.add_argument('--seed', type=int, default=0)
@@ -123,7 +115,7 @@ if config.epochs < 100:  # at least training for 100 epochs
     config.epochs = 100
 if hasattr(config, 'ema'):
     args.ema, args.tau, args.static_decay = config.ema, config.tau, config.static_decay
-    logger.info("   ### You are using EMA to improve the model ### ")
+    logger.info("   ### EMA is using for improving the performance ### ")
 else:
     args.ema, args.tau, args.static_decay = False, 0, False
 if misc.is_main_process():
@@ -463,7 +455,8 @@ def main():
         if args.local_rank == 0:
             logger.info("Using native Torch DistributedDataParallel.")
         model = torch.nn.parallel.DistributedDataParallel(model, device_ids=[args.local_rank],
-                                                          find_unused_parameters=True)
+                                                          find_unused_parameters=True, broadcast_buffers=False)
+        # model = torch.nn.parallel.DistributedDataParallel(model, device_ids=[args.local_rank], broadcast_buffers=False)
     if args.local_rank == 0:
         logger.info("Starting Epoch: %d" % (starting_epoch))
 

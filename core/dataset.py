@@ -10,7 +10,7 @@ from torch.utils.data import DataLoader
 from torchvision import datasets, transforms
 from torch.utils.data.dataset import Dataset
 
-from util import onehot, rand_bbox
+from .util import onehot, rand_bbox
 
 
 # "https://github.com/tml-epfl/understanding-fast-adv-training/blob/master/data.py",

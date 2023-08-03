@@ -225,8 +225,3 @@ def rand_bbox(size, lam):
     bby2 = np.clip(cy + cut_h // 2, 0, H)
 
     return bbx1, bby1, bbx2, bby2
-
-
-def cross_entropy_loss_with_soft_target(pred, soft_target):
-    logsoftmax = nn.LogSoftmax()
-    return torch.mean(torch.sum(-soft_target * logsoftmax(pred), 1))

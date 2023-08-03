@@ -4,16 +4,17 @@ import torch.nn.functional as F
 import models
 import numpy as np
 from torch.autograd import Variable
-from util import cross_entropy_loss_with_soft_target
 
 if torch.cuda.is_available():
     device = torch.device('cuda')
 else:
     device = torch.device('cpu')
 
+def cross_entropy_loss_with_soft_target(pred, soft_target):
+    logsoftmax = nn.LogSoftmax()
+    return torch.mean(torch.sum(-soft_target * logsoftmax(pred), 1))
 
 """ https://arxiv.org/abs/1706.06083 """
-
 
 class MadrysLoss(nn.Module):
     def __init__(self, step_size=0.007, epsilon=0.031, perturb_steps=10, beta=6.0,

@@ -1,6 +1,5 @@
-import util
 import time
-import misc
+from . import util, misc
 
 import torch
 import torch.optim as optim
