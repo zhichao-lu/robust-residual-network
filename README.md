@@ -214,40 +214,42 @@ Please see [``examples/compound_scaling.ipynb``]()
 | WRN-70-16 | 267M | 38.8G | 58.15 | 54.37 | [BaiduDisk] |
 | **RRN-A4 (ours)** | 147M | 39.4G | 61.88 | 57.55 | [BaiduDisk] |
 
-## Requirements
-The code has been implemented and tested with `Python 3.8.5`, `PyTorch 1.8.0`, and [apex](https://github.com/NVIDIA/apex)(use for accel).
 
 ## How to train
-### Standard adversarial training
-```console
-python -m torch.distributed.launch --nproc_per_node=2 --master_port 24220 main_dist.py 
-              --config_path ./configs/CIFAR10 
-              --exp_name ./exps/CIFAR10 
-              --version RobustResNet-A1 
-              --train 
-              --data_parallel 
-              --apex-amp
-```
-### Evaluation
-```console
-python -m torch.distributed.launch --nproc_per_node=2 --master_port 24220 main_dist.py 
-              --config_path ./configs/CIFAR10
-              --exp_name ./exps/CIFAR10 
-              --version RobustResNet-A1
-              --load_best_model 
-```
-### Advanced adversarial training
-For example, train a WRN-A4 model via [TRADES](https://github.com/yaodongyu/TRADES) on CIFAR-10 with the additional pseudolabeled data provided by [Carmon et al., 2019](https://github.com/yaircarmon/semisup-adv).
-```console
-python -m torch.distributed.launch --nproc_per_node=8 --master_port 14226 adv-main_dist.py 
---log-dir ./checkpoints/ --config-path ./configs/Advanced_CIFAR10 --version WRN-A4 
---desc drna4-basic-silu-apex-500k --apex-amp --adv-eval-freq 5 --start-eval 310 --apex_amp 
---advnorm --adjust_bn True 
- --num-adv-epochs 400 --batch-size 1024 --lr 0.4 --weight-decay 0.0005 --beta 6.0 
---data-dir /datasets/ --data cifar10s
---aux-data-filename /datasets/ti_500K_pseudo_labeled.pickle  --unsup-fraction 0.7
+### Baseline adversarial training
+```python
+python -m torch.distributed.launch \
+  --nproc_per_node=2 --master_port 24220 \  # use a random port number
+  main_dist.py \
+  --config_path ./configs/CIFAR10 \
+  --exp_name ./exps/CIFAR10 \  # path to where you want to store training stats
+  --version [WRN-A1/A2/A3/A4] \  # you may also change it to RobustResNet-A1/A2/A3/A4
+  --train \ 
+  --data_parallel \
+  --apex-amp
 ```
 
+### Advanced adversarial training
+Please download the additional pseudolabeled data from [Carmon et al., 2019](https://github.com/yaircarmon/semisup-adv).
+```python
+python -m torch.distributed.launch \
+  --nproc_per_node=8 --master_port 14226 \  # use a random port number
+  adv-main_dist.py \
+  --log-dir ./checkpoints/ \  # path to where you want to store training stats
+  --config-path ./configs/Advanced_CIFAR10
+  --version [WRN-A1/A2/A3/A4] \ 
+  --desc drna4-basic-silu-apex-500k \  # name of the folder for storing training stats
+  --apex-amp --adv-eval-freq 5 \  # evaluation frequency, will significantly slow down your training if too often
+  --start-eval 310 \  # start evaluating after N epochs
+  --apex_amp --advnorm --adjust_bn True \
+   --num-adv-epochs 400 --batch-size 1024 --lr 0.4 --weight-decay 0.0005 --beta 6.0 \
+  --data-dir /datasets/ --data cifar10s \
+  --aux-data-filename /datasets/ti_500K_pseudo_labeled.pickle \  # location to where you download the pseudolabeled data
+  --unsup-fraction 0.7
+```
+
+## Requirements
+The code has been implemented and tested with `Python 3.8.5`, `PyTorch 1.8.0`, and [apex](https://github.com/NVIDIA/apex)(use for accel).
 ### Part of the code is based on the following repos:
   - RobustWRN: https://github.com/HanxunH/RobustWRN
   - adversarial_robustness_pytorch: https://github.com/imrahulr/adversarial_robustness_pytorch
