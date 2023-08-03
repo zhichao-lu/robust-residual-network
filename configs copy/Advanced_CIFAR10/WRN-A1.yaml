@@ -1,0 +1,37 @@
+model:
+  name: PreActResNet
+  channel_configs:  # [20, 20, 8]
+  - 16
+  - 80
+  - 224
+  - 192
+  depth_configs:
+  - 14
+  - 14
+  - 7
+  drop_rate_config:
+  - 0.0
+  - 0.0
+  - 0.0
+  num_classes: 10
+  stride_config:
+  - 1
+  - 2
+  - 2
+  zero_init_residual: false
+  block_types:
+  - basic_block
+  - basic_block
+  - basic_block
+  activations:
+  - SiLU
+  - SiLU
+  - SiLU
+  kernel_size_configs:
+  - 3
+  - 3
+  - 3
+  normalizations:
+  - BatchNorm
+  - BatchNorm
+  - BatchNorm

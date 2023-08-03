@@ -1,0 +1,65 @@
+num_classes: 100
+epochs: 100
+grad_clip: 5.0
+log_frequency: 100
+model:
+  name: PreActResNet
+  channel_configs:  # [20, 20, 8]
+  - 16
+  - 80
+  - 224
+  - 192
+  depth_configs:
+  - 14
+  - 14
+  - 7
+  drop_rate_config:
+  - 0.0
+  - 0.0
+  - 0.0
+  num_classes: 100
+  stride_config:
+  - 1
+  - 2
+  - 2
+  zero_init_residual: false
+  block_types:
+  - robust_res_block
+  - robust_res_block
+  - robust_res_block
+  activations:
+  - ReLU
+  - ReLU
+  - ReLU
+  kernel_size_configs:
+  - 3
+  - 3
+  - 3
+  normalizations:
+  - BatchNorm
+  - BatchNorm
+  - BatchNorm
+criterion:
+  name: TradesLoss
+  epsilon: 0.03137254901960784
+  perturb_steps: 10
+  step_size: 0.00784313725490196
+dataset:
+  name: DatasetGenerator
+  train_batch_size: 128
+  eval_batch_size: 128
+  num_of_workers: 8
+  dataset_type: CIFAR100
+  data_path: /system_maintainer/dataset
+optimizer:
+  name: SGD
+  lr: 0.1
+  weight_decay: 0.0002
+  momentum: 0.9
+scheduler:
+  name: MultiStepLR
+  milestones:
+  - 75
+  - 90
+  - 100
+  gamma: 0.1
