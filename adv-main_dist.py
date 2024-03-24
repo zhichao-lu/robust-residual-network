@@ -15,9 +15,9 @@ import mlconfig
 import torch
 import torch.nn as nn
 
-from adv_core.data import get_data_info
-from adv_core.data import load_data
-from adv_core.data import SEMISUP_DATASETS, DATASETS
+from adv_core.datas import get_data_info
+from adv_core.datas import load_data
+from adv_core.datas import SEMISUP_DATASETS, DATASETS
 
 from adv_core.utils import format_time
 from adv_core.utils import Logger
